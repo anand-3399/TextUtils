@@ -9,7 +9,6 @@ export default function TextForm(props) {
     // setText("new text") //correct way to update state
 
     const handleUpClick = (e) => {
-        // console.log("Upper case was clicked");
         let newText = text.toUpperCase();
         // setText("you clicked on handleUpClick")
         setText(newText)
@@ -29,15 +28,11 @@ export default function TextForm(props) {
     }
 
     const handleOnChange = (event) => {
-        // console.log("On change");
         setText(event.target.value)
     }
 
     const handleCopy = () => {
-        var text = document.getElementById('myBox');
-        text.select();
-        navigator.clipboard.writeText(text.value);
-        document.getSelection().removeAllRanges();
+        navigator.clipboard.writeText(text);
         props.showAlert("Text has been copied", "success");
     }
 
@@ -65,12 +60,14 @@ export default function TextForm(props) {
 
 
             <div className="container my-3" style={{ color: props.mode === 'dark' ? 'white' : '#0d0d3f' }} >
+                <h3>Your Text Summary</h3>
                 {/* words and characters count*/}
-                <p>{text.split(" ").filter((element) => { return element.length !== 0 }).length} words and {text.length} characters </p>
+                {/* \s means whitespaces including new line character and + indicates more than 1 white spaces */}
+                <p>{text.split(/\s+/).filter((element) => { return element.length !== 0 }).length} words and {text.length} characters </p>
 
                 {/* Minutes Read TIME */}
                 <p>{0.008 * text.split(" ").filter((element) => { return element.length !== 0 }).length} Minutes Read </p>
-                <h2>Preview</h2>
+                <h3>Preview</h3>
                 <p>{text.length > 0 ? text : "Nothing to prieview"}</p>
             </div>
         </>
